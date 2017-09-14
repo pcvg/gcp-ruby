@@ -11,4 +11,3 @@ script:
   - docker run gcp-ruby:2.4 bash -c "which bundle || (printf 'bundle ot found.'; exit 1)"
   - docker run gcp-ruby:2.4 bash -c "which gcloud || (printf 'gcloud not found.'; exit 1)"
   - docker run gcp-ruby:2.4 bash -c "test -f ~/cloud_sql_proxy || (printf 'cloud_sql_proxy not found.'; exit 1)"
-  - docker run gcp-ruby:2.4 bash -c "gcloud components update"
