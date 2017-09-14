@@ -14,7 +14,7 @@ RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk-jessie main" | tee 
         google-cloud-sdk-app-engine-python \
         google-cloud-sdk-cbt \
         google-cloud-sdk-bigtable-emulator \
-        google-cloud-sdk-datalab \
+        google-cloud-sdk-datalab && \
       apt-get autoremove && \
       wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O ~/cloud_sql_proxy && \
       chmod +x ~/cloud_sql_proxy && \
