@@ -4,7 +4,7 @@ MAINTAINER Ain Tohvri <ain.tohvri@savings-united.com>
 
 RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk-jessie main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
       curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
-      curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - && \
+      curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
       apt-get update && \
       apt-get install -y kubectl \
         google-cloud-sdk \
