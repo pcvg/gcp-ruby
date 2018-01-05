@@ -7,7 +7,9 @@ Google Cloud capable Docker image for Ruby.
 - gcloud
 - cloudsql
 - Bundler
+- Node.js 8
+- Yarn
 
 ## Licence
 
-Copyright © 2017 Savings United GmbH. Licenced under [GPL-3](https://github.com/pcvg/gcp-ruby/blob/master/LICENSE)
+Copyright © 2017, 2018 Savings United GmbH. Licenced under [GPL-3](https://github.com/pcvg/gcp-ruby/blob/master/LICENSE)
