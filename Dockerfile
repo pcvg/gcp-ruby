@@ -2,7 +2,7 @@ FROM ruby:2.4
 
 MAINTAINER Ain Tohvri <ain.tohvri@savings-united.com>
 
-RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk-jessie main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk-jessie main" | tee /etc/apt/sources.list.d/google-cloud-sdk.list && \
       curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
       echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
       curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
