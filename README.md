@@ -7,7 +7,7 @@ Google Cloud capable Docker image for Ruby.
 - gcloud
 - cloudsql
 - Bundler
-- Node.js 8
+- Node.js
 - Yarn
 
 ## Licence
