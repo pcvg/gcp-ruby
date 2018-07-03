@@ -9,4 +9,5 @@ RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk-jessie main" | sudo
       sudo apt-get autoremove && \
       sudo wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O ~/cloud_sql_proxy && \
       sudo chmod +x ~/cloud_sql_proxy && \
-      sudo mkdir /cloudsql
+      sudo mkdir /cloudsql && \
+      sudo chown -R circleci:circleci /cloudsql

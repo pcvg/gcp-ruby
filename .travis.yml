@@ -13,6 +13,7 @@ script:
   - docker run gcp-ruby:2.5 bash -c "test -f ~/cloud_sql_proxy || (printf 'cloud_sql_proxy not found.'; exit 1)"
   - docker run gcp-ruby:2.5 bash -c "which node || (printf 'node not found.'; exit 1)"
   - docker run gcp-ruby:2.5 bash -c "which yarn || (printf 'yarn not found.'; exit 1)"
+  - docker run gcp-ruby:2.5 bash -c "touch /cloudsql/test.txt"
 
 notifications:
   slack:
