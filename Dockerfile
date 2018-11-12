@@ -1,4 +1,4 @@
-FROM circleci/ruby:2.5.1-node-browsers
+FROM circleci/ruby:2.5.3-node-browsers
 
 MAINTAINER Ain Tohvri <ain.tohvri@savings-united.com>
 
