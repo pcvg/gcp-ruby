@@ -1,4 +1,4 @@
-FROM ruby:2.6.0
+FROM ruby:2.6.1
 
 MAINTAINER Ain Tohvri <ain.tohvri@savings-united.com>
 
