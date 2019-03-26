@@ -1,19 +1,23 @@
 sudo: required
 
+env:
+  global:
+    - VERSION=2.6.1
+
 services:
   - docker
 
 install:
-  - docker build . -t gcp-ruby:2.6.1
+  - docker build . -t gcp-ruby:$VERSION
 
 script:
-  - docker run gcp-ruby:2.6.1 bash -c "which ruby || (printf 'ruby not found.'; exit 1)"
-  - docker run gcp-ruby:2.6.1 bash -c "which bundle || (printf 'bundle ot found.'; exit 1)"
-  - docker run gcp-ruby:2.6.1 bash -c "which gcloud || (printf 'gcloud not found.'; exit 1)"
-  - docker run gcp-ruby:2.6.1 bash -c "test -f ~/cloud_sql_proxy || (printf 'cloud_sql_proxy not found.'; exit 1)"
-  - docker run gcp-ruby:2.6.1 bash -c "which node || (printf 'node not found.'; exit 1)"
-  - docker run gcp-ruby:2.6.1 bash -c "which yarn || (printf 'yarn not found.'; exit 1)"
-  - docker run gcp-ruby:2.6.1 bash -c "touch /cloudsql/test.txt"
+  - docker run gcp-ruby:$VERSION bash -c "which ruby || (printf 'ruby not found.'; exit 1)"
+  - docker run gcp-ruby:$VERSION bash -c "which bundle || (printf 'bundle ot found.'; exit 1)"
+  - docker run gcp-ruby:$VERSION bash -c "which gcloud || (printf 'gcloud not found.'; exit 1)"
+  - docker run gcp-ruby:$VERSION bash -c "test -f ~/cloud_sql_proxy || (printf 'cloud_sql_proxy not found.'; exit 1)"
+  - docker run gcp-ruby:$VERSION bash -c "which node || (printf 'node not found.'; exit 1)"
+  - docker run gcp-ruby:$VERSION bash -c "which yarn || (printf 'yarn not found.'; exit 1)"
+  - docker run gcp-ruby:$VERSION bash -c "touch /cloudsql/test.txt"
 
 notifications:
   slack:
