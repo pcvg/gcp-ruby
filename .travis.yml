@@ -3,8 +3,6 @@ sudo: required
 env:
   global:
     - VERSION=2.6.2
-    - secure: "HpZWKfh31HPySOAK+QxScaj3H8wsyt4VZbkvgQdRet2jczA/iOzEwZ8GPymQKikpkpzVYIbOKVXZdD3pvxCwSV4tJ2GNLYCJ0cSjq6Bm10iOmQiWBK0+/T18tvFR/oVi4WafMmjtsCDB35Ebue1/65SHYPYRe4haRnrAYGyYESbLz4SIRnpJNeoYMY1mfIYROyVHsZRwUo80l8SUX98UL3omkKJom86La93afbVLVCwM11lxIMgggmZ0wL0ieRzZOq+eJ4eOF1EqNftx0khS2qcA8H6QBYyx5DZdnEjq52fG4C7NQ0YKwp0/DOe95sOG47cCcuMXdap2ZEhmsu00D5bg8AmIO7ERFLvrgRPwSV3gM1YcIkx2Hvzsu92fW0TuHCTyt/s5KOTlQdYE81u2v47wyBkY42gbBTnTit/vgeimdqVKbwm9TlfwHwOlO4kwOq5aEJaF7MQkLWTRq5qJDMtzkelrbgNy4eu3gr5mlxXqsiC4eeb4tUwhgmd81/UB6rnuRId/G7I4YbnOBrHpkC8rNha2O345x0MjEAktaW8bMuhlJVWaVSJa/KlanikC0BksF8qqL9IFVPXz8OuwRGblW1Ee62zi3n7pMMK1XbP0mzEHxVQFkeQquaLza9ivSsqXUdi4pQA0nWxDyoAHOPPPLMG0zMXbB2EuP8C8e7w="
-    - secure: "H32sQDd+vQRiwjUFTVG2RQPcXMD1FUbFQlewysAaLO7yuNEj8y9mFnCRYHxPT88qlCBwVqAO6Owr+Q49FG7SCFS1ktL2XplShY6Is5dTAlA2kgZaxEbByuRb5glinZRg31Svt/HDIJSeRAWHt0oYh44ZEtkXgDMXx4oOgzLZgt5hSn96co+hObiL/fElTFHXcDKwJ6onEsnEvcJQssI472Z+mEsaLd1AzMmVdXruLJtEKS5d1mqLlmqkBmaGsG2TQae+90+7+Gp40GzwxhUTE5lwHG68R1R6lAub5IvslGoNzBckN0KbJtDkXc1AU0rVrzzdOlOQiIfC3xDmsh4YbrcatREgDMf/eMg76oUgyKrYFYUO3rnrZcbhySgKwP3JnJfQf4pv5LIemEUrFNnbh54zRqenZ6/67D2j0o/5y+/U+afpVAk3J6S0T7tjm8wCAk8aNSkNOUwdbXgeMznov6eDdIJTZwmJ8c/4g6iS0XaLkCkOiOApYv6KO/qVkF6YkcSxk8I7IBnOHGNPdie8Cqaro9C4pjrQVLxA+sBXYeqUSJEucvhnIvjXTe4zc712witHWiXVBMKvAd+odoSRdt6iTbJlwCbuODDtlNJpw5HbZjDQZJRZR+3jjzbRyJcZr0vHNXBBn/FBl4kezg+KIz9Le7mUvDMtweeo3cxZzrg="
 
 services:
   - docker
@@ -19,7 +17,7 @@ script:
   - docker run gcp-ruby:$VERSION bash -c "test -f ~/cloud_sql_proxy || (printf 'cloud_sql_proxy not found.'; exit 1)"
   - docker run gcp-ruby:$VERSION bash -c "which node || (printf 'node not found.'; exit 1)"
   - docker run gcp-ruby:$VERSION bash -c "which yarn || (printf 'yarn not found.'; exit 1)"
-  - docker run gcp-ruby:$VERSION bash -c "touch /cloudsql/test.txt"
+  - docker run gcp-ruby:$VERSION bash -c "touch /cloudsql/test.txt && rm /cloudsql/test.txt"
 
 deploy:
   - provider: script
@@ -33,6 +31,6 @@ deploy:
     on:
       branch: master
 
-notifications:
-  slack:
-    secure: Rm8uAPsrhzjQWsDDslfs+L7dBZde49+NrtfjVNwgrAMbTFksgm6QScKahXpAVTlVcS/+eI95/L5zyuikZt8FyyMGXmIIiPHPgHvbeDlU6HXg4ln9HJRC9lVSqsT17iFiuEcznywt678USxq75vpPIUZarcGFQGlYwZlzcuaMmnHgeejPcL0HI2pKaYNpZe9eaxMEHSqgrK9jwJeOxjEo+Oc09jDh3hAlgai5lTbJ1tRnSKVlgFR63WQ9Md7e5IqsVABf+Pr6qNiqhdkwIvTGfeCqbWFz7+Fo+yzTuCdV4VJwGQtJ3TPHpmUheW111K5977Nqrd5dZuzpuITEBmJN/eF3YsqKi+qOCizk+lz2l4qjoEtzJQ1C80WnH3GJc+3tTeM6FmJOZ7xasYwQhBteDiOrMA/lBoMcD0ELFxO9IaOj6VoYuPKoYO5itfW+nEm+9dOdR59Z4+CFg8isdVM9bq4Oi9LS8IsHDxz+36poqt0Ew6MM1MB9TsWpYSJFXXlYjw0kydzJmwsSk1mOUQv4+ZfKcfOFrt56u2Nq7zpjoF8EJ9izbKG4Tos2CwF3GGy/UEjHguPz4JWSlEyA6zVnAEVQEJ9UAh46qbK6ylyCtaiWfPdjfySt+PMnFwB5w1mJYi1LTC80cKmG2Q4lgyBqCh7x2ClU4TtiXCJZqNSO9nc=
+#notifications:
+#  slack:
+#    secure: Rm8uAPsrhzjQWsDDslfs+L7dBZde49+NrtfjVNwgrAMbTFksgm6QScKahXpAVTlVcS/+eI95/L5zyuikZt8FyyMGXmIIiPHPgHvbeDlU6HXg4ln9HJRC9lVSqsT17iFiuEcznywt678USxq75vpPIUZarcGFQGlYwZlzcuaMmnHgeejPcL0HI2pKaYNpZe9eaxMEHSqgrK9jwJeOxjEo+Oc09jDh3hAlgai5lTbJ1tRnSKVlgFR63WQ9Md7e5IqsVABf+Pr6qNiqhdkwIvTGfeCqbWFz7+Fo+yzTuCdV4VJwGQtJ3TPHpmUheW111K5977Nqrd5dZuzpuITEBmJN/eF3YsqKi+qOCizk+lz2l4qjoEtzJQ1C80WnH3GJc+3tTeM6FmJOZ7xasYwQhBteDiOrMA/lBoMcD0ELFxO9IaOj6VoYuPKoYO5itfW+nEm+9dOdR59Z4+CFg8isdVM9bq4Oi9LS8IsHDxz+36poqt0Ew6MM1MB9TsWpYSJFXXlYjw0kydzJmwsSk1mOUQv4+ZfKcfOFrt56u2Nq7zpjoF8EJ9izbKG4Tos2CwF3GGy/UEjHguPz4JWSlEyA6zVnAEVQEJ9UAh46qbK6ylyCtaiWfPdjfySt+PMnFwB5w1mJYi1LTC80cKmG2Q4lgyBqCh7x2ClU4TtiXCJZqNSO9nc=
