@@ -23,10 +23,12 @@ script:
 
 deploy:
   - provider: script
+    skip_cleanup: true
     script: bash deploy.sh $VERSION
     on:
       tags: true
   - provider: script
+    skip_cleanup: true
     script: bash deploy.sh latest
     on:
       branch: master
