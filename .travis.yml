@@ -2,6 +2,7 @@ sudo: required
 
 env:
   global:
+    - VERSION=2.6.2
     - secure: "HpZWKfh31HPySOAK+QxScaj3H8wsyt4VZbkvgQdRet2jczA/iOzEwZ8GPymQKikpkpzVYIbOKVXZdD3pvxCwSV4tJ2GNLYCJ0cSjq6Bm10iOmQiWBK0+/T18tvFR/oVi4WafMmjtsCDB35Ebue1/65SHYPYRe4haRnrAYGyYESbLz4SIRnpJNeoYMY1mfIYROyVHsZRwUo80l8SUX98UL3omkKJom86La93afbVLVCwM11lxIMgggmZ0wL0ieRzZOq+eJ4eOF1EqNftx0khS2qcA8H6QBYyx5DZdnEjq52fG4C7NQ0YKwp0/DOe95sOG47cCcuMXdap2ZEhmsu00D5bg8AmIO7ERFLvrgRPwSV3gM1YcIkx2Hvzsu92fW0TuHCTyt/s5KOTlQdYE81u2v47wyBkY42gbBTnTit/vgeimdqVKbwm9TlfwHwOlO4kwOq5aEJaF7MQkLWTRq5qJDMtzkelrbgNy4eu3gr5mlxXqsiC4eeb4tUwhgmd81/UB6rnuRId/G7I4YbnOBrHpkC8rNha2O345x0MjEAktaW8bMuhlJVWaVSJa/KlanikC0BksF8qqL9IFVPXz8OuwRGblW1Ee62zi3n7pMMK1XbP0mzEHxVQFkeQquaLza9ivSsqXUdi4pQA0nWxDyoAHOPPPLMG0zMXbB2EuP8C8e7w="
     - secure: "H32sQDd+vQRiwjUFTVG2RQPcXMD1FUbFQlewysAaLO7yuNEj8y9mFnCRYHxPT88qlCBwVqAO6Owr+Q49FG7SCFS1ktL2XplShY6Is5dTAlA2kgZaxEbByuRb5glinZRg31Svt/HDIJSeRAWHt0oYh44ZEtkXgDMXx4oOgzLZgt5hSn96co+hObiL/fElTFHXcDKwJ6onEsnEvcJQssI472Z+mEsaLd1AzMmVdXruLJtEKS5d1mqLlmqkBmaGsG2TQae+90+7+Gp40GzwxhUTE5lwHG68R1R6lAub5IvslGoNzBckN0KbJtDkXc1AU0rVrzzdOlOQiIfC3xDmsh4YbrcatREgDMf/eMg76oUgyKrYFYUO3rnrZcbhySgKwP3JnJfQf4pv5LIemEUrFNnbh54zRqenZ6/67D2j0o/5y+/U+afpVAk3J6S0T7tjm8wCAk8aNSkNOUwdbXgeMznov6eDdIJTZwmJ8c/4g6iS0XaLkCkOiOApYv6KO/qVkF6YkcSxk8I7IBnOHGNPdie8Cqaro9C4pjrQVLxA+sBXYeqUSJEucvhnIvjXTe4zc712witHWiXVBMKvAd+odoSRdt6iTbJlwCbuODDtlNJpw5HbZjDQZJRZR+3jjzbRyJcZr0vHNXBBn/FBl4kezg+KIz9Le7mUvDMtweeo3cxZzrg="
 
@@ -12,21 +13,21 @@ install:
   - docker build . -t gcp-ruby:2.6.1
 
 script:
-  - docker run gcp-ruby:2.6.1 bash -c "which ruby || (printf 'ruby not found.'; exit 1)"
-  - docker run gcp-ruby:2.6.1 bash -c "which bundle || (printf 'bundle ot found.'; exit 1)"
-  - docker run gcp-ruby:2.6.1 bash -c "which gcloud || (printf 'gcloud not found.'; exit 1)"
-  - docker run gcp-ruby:2.6.1 bash -c "test -f ~/cloud_sql_proxy || (printf 'cloud_sql_proxy not found.'; exit 1)"
-  - docker run gcp-ruby:2.6.1 bash -c "which node || (printf 'node not found.'; exit 1)"
-  - docker run gcp-ruby:2.6.1 bash -c "which yarn || (printf 'yarn not found.'; exit 1)"
-  - docker run gcp-ruby:2.6.1 bash -c "touch /cloudsql/test.txt"
+  - docker run gcp-ruby:$VERSION bash -c "which ruby || (printf 'ruby not found.'; exit 1)"
+  - docker run gcp-ruby:$VERSION bash -c "which bundle || (printf 'bundle ot found.'; exit 1)"
+  - docker run gcp-ruby:$VERSION bash -c "which gcloud || (printf 'gcloud not found.'; exit 1)"
+  - docker run gcp-ruby:$VERSION bash -c "test -f ~/cloud_sql_proxy || (printf 'cloud_sql_proxy not found.'; exit 1)"
+  - docker run gcp-ruby:$VERSION bash -c "which node || (printf 'node not found.'; exit 1)"
+  - docker run gcp-ruby:$VERSION bash -c "which yarn || (printf 'yarn not found.'; exit 1)"
+  - docker run gcp-ruby:$VERSION bash -c "touch /cloudsql/test.txt"
 
 deploy:
   - provider: script
-    script: docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD && docker push gcp-ruby:2.6.1
+    script: bash deploy.sh $VERSION
     on:
       tags: true
   - provider: script
-    script: docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD && docker push gcp-ruby:latest
+    script: bash deploy.sh latest
     on:
       branch: master
 
