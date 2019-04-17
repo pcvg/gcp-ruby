@@ -1,6 +1,6 @@
 workflow "Build and Publish" {
   on = "push"
-  resolves = "Build"
+  resolves = "Docker Publish"
 }
 
 action "Docker Lint" {
