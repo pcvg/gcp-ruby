@@ -1,7 +1,5 @@
 FROM ruby:2.6.2
 
-MAINTAINER Ain Tohvri <ain.tohvri@savings-united.com>
-
 RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk-jessie main" | tee /etc/apt/sources.list.d/google-cloud-sdk.list && \
       curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
       echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
