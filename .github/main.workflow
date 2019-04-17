@@ -50,14 +50,14 @@ action "Test Yarn" {
   args = "run gcp-ruby bash -c 'which yarn || exit 1'"
 }
 
-action "Notify test success" {
+action "Conclude tests" {
   needs = ["Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
   uses = "actions/bin/sh@master"
-  args = "echo 'Tests completed!'"
+  args = "exit 0"
 }
 
 action "Publish Filter" {
-  needs = ["Notify test success"]
+  needs = ["Conclude tests"]
   uses = "actions/bin/filter@master"
   args = "branch master"
 }
