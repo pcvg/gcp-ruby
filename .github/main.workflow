@@ -69,7 +69,7 @@ action "Docker Login" {
 }
 
 action "Docker Publish" {
-  needs = ["Docker Tag", "Docker Login"]
+  needs = ["Docker Login"]
   uses = "actions/docker/cli@master"
   args = "push savingsutd/gcp-ruby"
 }
