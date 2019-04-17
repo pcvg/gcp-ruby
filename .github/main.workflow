@@ -50,8 +50,14 @@ action "Test Yarn" {
   args = "run savingsutd/gcp-ruby:latest bash -c 'which yarn || exit 1'"
 }
 
-action "Publish Filter" {
+action "Test Filter" {
   needs = ["Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
+  uses = "actions/bin/filter@master"
+  args = "branch"
+}
+
+action "Publish Filter" {
+  needs = ["Test Filter"]
   uses = "actions/bin/filter@master"
   args = "branch master"
 }
@@ -63,7 +69,7 @@ action "Docker Login" {
 }
 
 action "Docker Publish" {
-  needs = ["Docker Login"]
+  needs = ["Docker Tag", "Docker Login"]
   uses = "actions/docker/cli@master"
   args = "push savingsutd/gcp-ruby"
 }
