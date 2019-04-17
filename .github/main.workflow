@@ -50,10 +50,11 @@ action "Test Yarn" {
   args = "run gcp-ruby bash -c 'which yarn || exit 1'"
 }
 
+# TODO: send notifications
 action "Conclude tests" {
   needs = ["Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
   uses = "actions/bin/sh@master"
-  args = "exit 0"
+  args = ["exit 0"]
 }
 
 action "Publish Filter" {
