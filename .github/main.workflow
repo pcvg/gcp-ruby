@@ -95,7 +95,7 @@ action "Release Filter" {
 action "Docker Tag Release" {
   needs = ["Release Filter"]
   uses = "actions/docker/tag@master"
-  args = "gcp-ruby savingsutd/gcp-ruby"
+  args = "gcp-ruby savingsutd/gcp-ruby --no-latest --no-sha"
 }
 
 action "Docker Release" {
