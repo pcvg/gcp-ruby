@@ -53,7 +53,7 @@ action "Test Yarn" {
 action "Publish Filter" {
   needs = ["Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
   uses = "actions/bin/filter@master"
-  args = "ref refs/'heads/master|tags/*'"
+  args = "ref 'refs/heads/master|refs/tags/*'"
 }
 
 action "Docker Tag" {
