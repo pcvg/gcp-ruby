@@ -1,9 +1,15 @@
-workflow "Build and Publish Latest Version" {
+workflow "Build and Publish Tagged Version" {
   on = "push"
   resolves = "Docker Publish"
 }
 
+action "Filter" {
+  uses = "actions/bin/filter@master"
+  args = "tag"
+}
+
 action "Docker Lint" {
+  needs = ["Filter"]
   uses = "docker://replicated/dockerfilelint"
   args = ["Dockerfile"]
 }
@@ -57,26 +63,20 @@ action "Conclude tests" {
   args = ["exit 0"]
 }
 
-action "Publish Filter" {
-  needs = ["Conclude tests"]
-  uses = "actions/bin/filter@master"
-  args = "branch master"
-}
-
-action "Docker Tag Latest" {
-  needs = ["Publish Filter"]
+action "Docker Tag" {
+  needs = ["Conclude Tests"]
   uses = "actions/docker/cli@master"
-  args = "tag gcp-ruby savingsutd/gcp-ruby:latest"
+  args = "gcp-ruby savingsutd/gcp-ruby --no-latest --no-sha"
 }
 
 action "Docker Login" {
-  needs = ["Publish Filter"]
+  needs = ["Conclude tests"]
   uses = "actions/docker/login@master"
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
 
 action "Docker Publish" {
-  needs = ["Docker Tag Latest", "Docker Login"]
+  needs = ["Docker Tag", "Docker Login"]
   uses = "actions/docker/cli@master"
   args = "push savingsutd/gcp-ruby"
 }
