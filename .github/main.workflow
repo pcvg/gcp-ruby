@@ -65,8 +65,8 @@ action "Publish Filter" {
 
 action "Docker Tag Latest" {
   needs = ["Publish Filter"]
-  uses = "actions/docker/tag@master --no-ref --no-sha"
-  args = "gcp-ruby savingsutd/gcp-ruby:latest"
+  uses = "actions/docker/tag@master"
+  args = "gcp-ruby savingsutd/gcp-ruby --no-ref --no-sha"
 }
 
 action "Docker Login" {
