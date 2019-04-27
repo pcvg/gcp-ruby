@@ -1,4 +1,4 @@
-workflow "Build and Publish Latest Version" {
+workflow "Build and Publish" {
   on = "push"
   resolves = "Docker Publish"
 }
@@ -50,23 +50,16 @@ action "Test Yarn" {
   args = "run gcp-ruby bash -c 'which yarn || exit 1'"
 }
 
-# TODO: send notifications
-action "Conclude tests" {
-  needs = ["Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
-  uses = "actions/bin/sh@master"
-  args = ["exit 0"]
-}
-
 action "Publish Filter" {
-  needs = ["Conclude tests"]
+  needs = ["Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
   uses = "actions/bin/filter@master"
-  args = "branch master"
+  args = "'branch master|tag'"
 }
 
-action "Docker Tag Latest" {
+action "Docker Tag" {
   needs = ["Publish Filter"]
-  uses = "actions/docker/cli@master"
-  args = "tag gcp-ruby savingsutd/gcp-ruby:latest"
+  uses = "actions/docker/tag@master"
+  args = "gcp-ruby savingsutd/gcp-ruby --no-sha"
 }
 
 action "Docker Login" {
@@ -76,7 +69,7 @@ action "Docker Login" {
 }
 
 action "Docker Publish" {
-  needs = ["Docker Tag Latest", "Docker Login"]
+  needs = ["Docker Tag", "Docker Login"]
   uses = "actions/docker/cli@master"
   args = "push savingsutd/gcp-ruby"
 }
