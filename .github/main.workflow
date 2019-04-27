@@ -1,6 +1,6 @@
 workflow "Build and Publish" {
   on = "push"
-  resolves = "Docker Publish"
+  resolves = ["Docker Publish Latest", "Docker Publish Version"]
 }
 
 action "Docker Lint" {
@@ -93,7 +93,7 @@ action "Docker Tag Version" {
   args = "gcp-ruby savingsutd/gcp-ruby --no-latest --no-sha"
 }
 
-action "Docker Release" {
+action "Docker Publish Version" {
   needs = ["Docker Tag Version", "Docker Login"]
   uses = "actions/docker/cli@master"
   args = "push savingsutd/gcp-ruby"
