@@ -57,49 +57,44 @@ action "Conclude tests" {
   args = ["exit 0"]
 }
 
-action "Publish Filter" {
+action "Latest Release Filter" {
   needs = ["Conclude tests"]
   uses = "actions/bin/filter@master"
   args = "branch master"
 }
 
 action "Docker Tag Latest" {
-  needs = ["Publish Filter"]
+  needs = ["Latest Release Filter"]
   uses = "actions/docker/tag@master"
   args = "gcp-ruby savingsutd/gcp-ruby --no-sha"
 }
 
 action "Docker Login" {
-  needs = ["Publish Filter"]
+  needs = ["Conclude tests"]
   uses = "actions/docker/login@master"
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
 
-action "Docker Publish" {
+action "Docker Publish Latest" {
   needs = ["Docker Tag Latest", "Docker Login"]
   uses = "actions/docker/cli@master"
   args = "push savingsutd/gcp-ruby"
 }
 
-workflow "Release" {
-  on = "release"
-  resolves = "Docker Release"
-}
-
-action "Release Filter" {
-  needs = ["Build"]
+action "Version Release Filter" {
+  needs = ["Conclude tests"]
   uses = "actions/bin/filter@master"
   args = "tag"
 }
 
-action "Docker Tag Release" {
-  needs = ["Release Filter"]
+action "Docker Tag Version" {
+  needs = ["Version Release Filter"]
   uses = "actions/docker/tag@master"
   args = "gcp-ruby savingsutd/gcp-ruby --no-latest --no-sha"
 }
 
 action "Docker Release" {
-  needs = ["Docker Tag Release", "Docker Login"]
+  needs = ["Docker Tag Version", "Docker Login"]
   uses = "actions/docker/cli@master"
   args = "push savingsutd/gcp-ruby"
 }
