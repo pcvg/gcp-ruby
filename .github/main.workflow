@@ -1,6 +1,6 @@
 workflow "Build and Publish" {
   on = "push"
-  resolves = ["Docker Publish Latest", "Docker Publish Version"]
+  resolves = "Docker Publish"
 }
 
 action "Docker Lint" {
@@ -57,44 +57,49 @@ action "Conclude tests" {
   args = ["exit 0"]
 }
 
-action "Latest Release Filter" {
+action "Publish Filter" {
   needs = ["Conclude tests"]
   uses = "actions/bin/filter@master"
   args = "branch master"
 }
 
 action "Docker Tag Latest" {
-  needs = ["Latest Release Filter"]
-  uses = "actions/docker/tag@master"
-  args = "gcp-ruby savingsutd/gcp-ruby --no-sha"
+  needs = ["Publish Filter"]
+  uses = "actions/docker/cli@master"
+  args = "tag gcp-ruby savingsutd/gcp-ruby:latest"
 }
 
 action "Docker Login" {
-  needs = ["Conclude tests"]
+  needs = ["Publish Filter"]
   uses = "actions/docker/login@master"
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
 
-action "Docker Publish Latest" {
+action "Docker Publish" {
   needs = ["Docker Tag Latest", "Docker Login"]
   uses = "actions/docker/cli@master"
   args = "push savingsutd/gcp-ruby"
 }
 
-action "Version Release Filter" {
-  needs = ["Conclude tests"]
+workflow "Release" {
+  on = "release"
+  resolves = "Docker Release"
+}
+
+action "Release Filter" {
+  needs = ["Build"]
   uses = "actions/bin/filter@master"
   args = "tag"
 }
 
-action "Docker Tag Version" {
-  needs = ["Version Release Filter"]
+action "Docker Tag Release" {
+  needs = ["Release Filter"]
   uses = "actions/docker/tag@master"
   args = "gcp-ruby savingsutd/gcp-ruby --no-latest --no-sha"
 }
 
-action "Docker Publish Version" {
-  needs = ["Docker Tag Version", "Docker Login"]
+action "Docker Release" {
+  needs = ["Docker Tag Release", "Docker Login"]
   uses = "actions/docker/cli@master"
   args = "push savingsutd/gcp-ruby"
 }
