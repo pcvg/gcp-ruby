@@ -1,9 +1,9 @@
-# gcp-ruby [![Build Status](https://travis-ci.org/pcvg/gcp-ruby.svg?branch=master)](https://travis-ci.org/pcvg/gcp-ruby)
+# gcp-ruby
 Google Cloud capable Docker image for Ruby.
 
 ## Features
 
-- Ruby 2.6.2
+- Ruby 2.6.3
 - gcloud
 - cloudsql
 - Bundler
