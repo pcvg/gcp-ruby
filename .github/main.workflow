@@ -3,7 +3,13 @@ workflow "Build and Publish" {
   resolves = "Docker Publish"
 }
 
+action "Entry Filter" {
+  uses = "actions/bin/filter@master"
+  args = "not deleted"
+}
+
 action "Docker Lint" {
+  needs = ["Entry Filter"]
   uses = "docker://replicated/dockerfilelint"
   args = ["Dockerfile"]
 }
@@ -53,7 +59,7 @@ action "Test Yarn" {
 action "Publish Filter" {
   needs = ["Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
   uses = "actions/bin/filter@master"
-  args = "ref 'refs/heads/master|refs/tags/*'"
+  args = "branch master"
 }
 
 action "Docker Tag" {
