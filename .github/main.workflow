@@ -94,7 +94,7 @@ action "Docker Publish" {
 #
 
 workflow "Release" {
-  on = "push"
+  on = "release"
   resolves = "Docker Release"
 }
 
