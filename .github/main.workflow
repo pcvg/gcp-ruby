@@ -98,11 +98,6 @@ workflow "Release" {
   resolves = "Docker Release"
 }
 
-action "Release Filter" {
-  uses = "actions/bin/filter@master"
-  args = "tag"
-}
-
 action "Docker Tag Release" {
   needs = ["Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
   uses = "actions/docker/tag@master"
@@ -116,7 +111,7 @@ action "Docker Login for Release" {
 }
 
 action "Docker Release" {
-  needs = ["Docker Tag Release", "Docker Login for Release", "Release Filter"]
+  needs = ["Docker Tag Release", "Docker Login for Release"]
   uses = "actions/docker/cli@master"
   args = "push savingsutd/gcp-ruby"
 }
