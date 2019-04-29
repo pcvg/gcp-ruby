@@ -94,13 +94,8 @@ action "Docker Publish" {
 #
 
 workflow "Release" {
-  on = "push"
+  on = "release"
   resolves = "Docker Release"
-}
-
-action "Release Filter" {
-  uses = "actions/bin/filter@master"
-  args = "tag"
 }
 
 action "Docker Tag Release" {
@@ -116,7 +111,7 @@ action "Docker Login for Release" {
 }
 
 action "Docker Release" {
-  needs = ["Docker Tag Release", "Docker Login for Release", "Release Filter"]
+  needs = ["Docker Tag Release", "Docker Login for Release"]
   uses = "actions/docker/cli@master"
   args = "push savingsutd/gcp-ruby"
 }
