@@ -66,19 +66,20 @@ action "Publish Filter" {
   args = "branch master"
 }
 
-action "Docker Tag" {
+action "Docker Tag Latest" {
   needs = ["Publish Filter"]
   uses = "actions/docker/cli@master"
   args = "tag gcp-ruby savingsutd/gcp-ruby:latest"
 }
 
-action "Docker Login" {
+action "Docker Login for Latest" {
+  needs = ["Publish Filter"]
   uses = "actions/docker/login@master"
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
 
 action "Docker Publish" {
-  needs = ["Docker Tag", "Docker Login"]
+  needs = ["Docker Tag Latest", "Docker Login for Latest"]
   uses = "actions/docker/cli@master"
   args = "push savingsutd/gcp-ruby"
 }
@@ -104,8 +105,14 @@ action "Docker Tag Release" {
   args = "gcp-ruby savingsutd/gcp-ruby --no-sha --no-latest"
 }
 
+action "Docker Login for Release" {
+  needs = ["Release Filter"]
+  uses = "actions/docker/login@master"
+  secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
+}
+
 action "Docker Release" {
-  needs = ["Docker Tag Release", "Docker Login"]
+  needs = ["Docker Tag Release", "Docker Login for Release"]
   uses = "actions/docker/cli@master"
   args = "push savingsutd/gcp-ruby"
 }
