@@ -12,6 +12,12 @@ action "Entry Filter" {
   args = "not deleted"
 }
 
+action "Tag Filter" {
+  needs = ["Entry Filter"]
+  uses = "actions/bin/filter@master"
+  args = "not tag"
+}
+
 action "Docker Lint" {
   needs = ["Entry Filter"]
   uses = "docker://replicated/dockerfilelint"
@@ -61,7 +67,7 @@ action "Test Yarn" {
 }
 
 action "Publish Filter" {
-  needs = ["Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
+  needs = ["Tag Filter", "Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
   uses = "actions/bin/filter@master"
   args = "branch master"
 }
@@ -106,13 +112,13 @@ action "Docker Tag Release" {
 }
 
 action "Docker Login for Release" {
-  needs = ["Release Filter"]
+  needs = ["Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
   uses = "actions/docker/login@master"
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
 
 action "Docker Release" {
-  needs = ["Docker Tag Release", "Docker Login for Release"]
+  needs = ["Docker Tag Release", "Docker Login for Release", "Release Filter"]
   uses = "actions/docker/cli@master"
   args = "push savingsutd/gcp-ruby"
 }
