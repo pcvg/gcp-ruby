@@ -13,7 +13,6 @@ action "Entry Filter" {
 }
 
 action "Tag Filter" {
-  needs = ["Entry Filter"]
   uses = "actions/bin/filter@master"
   args = "not tag"
 }
@@ -100,7 +99,6 @@ workflow "Release" {
 }
 
 action "Release Filter" {
-  needs = ["Entry Filter"]
   uses = "actions/bin/filter@master"
   args = "tag"
 }
