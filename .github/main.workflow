@@ -65,6 +65,12 @@ action "Test Yarn" {
   args = "run gcp-ruby bash -c 'which yarn || exit 1'"
 }
 
+action "Test Google Chrome" {
+  needs = ["Build"]
+  uses = "actions/docker/cli@master"
+  args = "run gcp-ruby bash -c 'which chrome || exit 1'"
+}
+
 action "Publish Filter" {
   needs = ["Tag Filter", "Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
   uses = "actions/bin/filter@master"
