@@ -68,11 +68,11 @@ action "Test Yarn" {
 action "Test Google Chrome" {
   needs = ["Build"]
   uses = "actions/docker/cli@master"
-  args = "run gcp-ruby bash -c 'which chrome || exit 1'"
+  args = "run gcp-ruby bash -c 'which google-chrome || exit 1'"
 }
 
 action "Publish Filter" {
-  needs = ["Tag Filter", "Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
+  needs = ["Tag Filter", "Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn", "Test Google Chrome"]
   uses = "actions/bin/filter@master"
   args = "branch master"
 }
@@ -105,13 +105,13 @@ workflow "Release" {
 }
 
 action "Docker Tag Release" {
-  needs = ["Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
+  needs = ["Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn", "Test Google Chrome"]
   uses = "actions/docker/tag@master"
   args = "gcp-ruby savingsutd/gcp-ruby --no-sha --no-latest"
 }
 
 action "Docker Login for Release" {
-  needs = ["Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn"]
+  needs = ["Test Ruby", "Test Bundler", "Test Google Cloud SDK", "Test Cloud SQL Proxy", "Test Node.js", "Test Yarn", "Test Google Chrome"]
   uses = "actions/docker/login@master"
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
