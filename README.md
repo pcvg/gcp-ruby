@@ -9,6 +9,7 @@ Google Cloud capable Docker image for Ruby.
 - Bundler
 - Node.js
 - Yarn
+- Chrome
 
 ## Licence
 
