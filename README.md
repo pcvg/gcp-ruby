@@ -3,7 +3,7 @@ Google Cloud capable Docker image for Ruby.
 
 ## Features
 
-- Ruby 2.6.3
+- Ruby 2.6.4
 - gcloud
 - cloudsql
 - Bundler
