@@ -10,4 +10,4 @@ jobs:
     steps:
       - uses: docker://replicated/dockerfilelint
         with:
-          args: Dockerfile
+          args: /Dockerfile
