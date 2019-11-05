@@ -8,6 +8,6 @@ jobs:
     name: Lint Dockerfile
     runs-on: ubuntu-latest
     steps:
-      - uses: docker://replicated/dockerfilelint:09a5034
+      - uses: docker://replicated/dockerfilelint
         with:
-          args: /Dockerfile
+          args: /github/workspace/Dockerfile
