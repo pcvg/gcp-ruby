@@ -1,6 +1,6 @@
-FROM ruby:2.6.4
+FROM ruby:2.6.5
 
-LABEL version="2.6.4"
+LABEL version="2.6.5"
 LABEL maintainer="Ain Tohvri <ain.tohvri@savings-united.com>"
 
 RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk-jessie main" | tee /etc/apt/sources.list.d/google-cloud-sdk.list && \
