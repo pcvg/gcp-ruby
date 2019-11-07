@@ -8,6 +8,6 @@ jobs:
     name: Lint Dockerfile
     runs-on: ubuntu-latest
     steps:
-      - uses: docker://replicated/dockerfilelint
-        with:
-          args: /github/workspace/Dockerfile
+      - uses: actions/checkout@master
+      - run: npm i -g dockerlint
+      - run: dockerlint Dockerfile
