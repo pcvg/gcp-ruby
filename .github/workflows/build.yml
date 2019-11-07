@@ -4,6 +4,7 @@ on:
     branches:
       - master
 jobs:
+
   lint:
     name: Lint Dockerfile
     runs-on: ubuntu-latest
@@ -11,17 +12,43 @@ jobs:
       - uses: actions/checkout@master
       - run: npm i
       - run: npm test
-  build:
+
+  build_and_publish:
     needs: lint
-    name: Build Docker image
+    name: Build and publish Docker image
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - run: docker build -t gcp-ruby .
-  test:
-    needs: build
-    name: Test Docker image
-    runs-on: ubuntu-latest
-    steps:
+
+      - name: Build image
+        run: docker build -t gcp-ruby .
+
       - name: Test Ruby
         run: docker run gcp-ruby bash -c "which ruby || exit 1"
+
+      - name: Test Bundler
+        run: docker run gcp-ruby bash -c "which bundle || exit 1"
+
+      - name: Test Google Cloud SDK
+        run: docker run gcp-ruby bash -c "which gcloud || exit 1"
+
+      - name: Test Cloud SQL Proxy
+        run: docker run gcp-ruby bash -c "test -f ~/cloud_sql_proxy && touch /cloudsql/.keep && rm /cloudsql/.keep || exit 1"
+
+      - name: Test Node.js
+        run: docker run gcp-ruby bash -c "which node || exit 1"
+
+      - name: Test Yarn
+        run: docker run gcp-ruby bash -c "which yarn || exit 1"
+
+      - name: Test Chrome
+        run: docker run gcp-ruby bash -c "which google-chrome || exit 1"
+
+      - name: Tag image
+        run: docker tag gcp-ruby savingsutd/gcp-ruby:latest
+
+      - name: Login
+        run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+
+      - name: Publish
+        run: docker push savingsutd/gcp-ruby:latest
