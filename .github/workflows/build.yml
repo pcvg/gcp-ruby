@@ -48,7 +48,8 @@ jobs:
         run: docker tag gcp-ruby savingsutd/gcp-ruby:latest
 
       - name: Docker login
-        run: echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
+        run: |
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_PASSWORD }} --password-stdin
 
       - name: Publish
         run: docker push savingsutd/gcp-ruby:latest
