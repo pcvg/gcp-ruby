@@ -17,6 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: actions/docker/cli@master
-        with:
-          args: build -t gcp-ruby .
+      - run: docker build -t gcp-ruby .
+  test:
+    needs: build
+    name: Test Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test Ruby
+        run: docker run gcp-ruby bash -c "which ruby || exit 1"
