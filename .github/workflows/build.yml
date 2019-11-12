@@ -50,7 +50,7 @@ jobs:
         run: |
           docker tag gcp-ruby savingsutd/gcp-ruby:latest &&
           docker push savingsutd/gcp-ruby:latest
-        if: github.ref === 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
 
       - name: Publish release
         run: |
