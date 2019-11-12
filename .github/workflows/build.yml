@@ -53,8 +53,10 @@ jobs:
         if: github.ref == 'refs/heads/master'
 
       - name: Publish release
+        env:
+          REFS: ${{ github.refs }}
         run: |
-          export RELEASE_TAG=$(echo ${{ github.refs }} | sed -e 's,.*/\(.*\),\1,') &&
+          export RELEASE_TAG=$(echo $REFS | sed -e 's,.*/\(.*\),\1,') &&
           docker tag gcp-ruby savingsutd/gcp-ruby:$RELEASE_TAG &&
           docker push savingsutd/gcp-ruby:$RELEASE_TAG
         if: contains(github.ref, 'refs/tags')
