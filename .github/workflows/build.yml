@@ -1,8 +1,6 @@
 name: Build and Publish
-on:
-  push:
-    branches:
-      - master
+on: [push]
+
 jobs:
 
   lint:
@@ -44,12 +42,20 @@ jobs:
       - name: Test Chrome
         run: docker run gcp-ruby bash -c "which google-chrome || exit 1"
 
-      - name: Tag image
-        run: docker tag gcp-ruby savingsutd/gcp-ruby:latest
-
       - name: Docker login
         run: |
           echo ${{ secrets.DOCKER_ACCESS_TOKEN }} | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
-      - name: Publish
-        run: docker push savingsutd/gcp-ruby:latest
+      - name: Publish latest
+        run: |
+          docker tag gcp-ruby savingsutd/gcp-ruby:latest &&
+          docker push savingsutd/gcp-ruby:latest
+        if: github.ref === 'refs/heads/master'
+
+      - name: Publish release
+        env:
+          RELEASE_TAG: ${{ github.refs | sed -e 's,.*/\(.*\),\1,' }}
+        run: |
+          docker tag gcp-ruby savingsutd/gcp-ruby:$RELEASE_TAG &&
+          docker push savingsutd/gcp-ruby:$RELEASE_TAG
+        if: contains(github.ref, 'refs/tags')
