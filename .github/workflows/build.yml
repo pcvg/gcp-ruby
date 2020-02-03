@@ -27,7 +27,7 @@ jobs:
         run: docker run gcp-ruby bash -c "which ruby || exit 1"
 
       - name: Test Bundler
-        run: docker run gcp-ruby bash -c "which bundle || exit 1"
+        run: docker run gcp-ruby bash -c "bundle version"
 
       - name: Test Google Cloud SDK
         run: docker run gcp-ruby bash -c "which gcloud || exit 1"
