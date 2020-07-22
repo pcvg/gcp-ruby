@@ -50,11 +50,11 @@ jobs:
         run: |
           docker tag gcp-ruby savingsutd/gcp-ruby:latest &&
           docker push savingsutd/gcp-ruby:latest
-        if: github.ref == 'refs/heads/master'
+        if: success() && github.ref == 'refs/heads/master'
 
       - name: Publish release
         run: |
           export RELEASE_TAG=$(echo $GITHUB_REF | sed -e 's,.*/\(.*\),\1,') &&
           docker tag gcp-ruby savingsutd/gcp-ruby:$RELEASE_TAG &&
           docker push savingsutd/gcp-ruby:$RELEASE_TAG
-        if: contains(github.ref, 'refs/tags')
+        if: success() && contains(github.ref, 'refs/tags')
