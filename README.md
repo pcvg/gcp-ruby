@@ -3,8 +3,8 @@ Google Cloud capable Docker image for Ruby.
 
 ## Features
 
-- Ruby 2.7.2
-- Node.js v14
+- Ruby 3.0.0
+- Node.js v15
 - gcloud
 - cloudsql
 - Bundler
@@ -13,4 +13,4 @@ Google Cloud capable Docker image for Ruby.
 
 ## Licence
 
-Copyright © 2017-2020 Savings United GmbH, contributors. Licenced under [GPL-3](https://github.com/pcvg/gcp-ruby/blob/master/LICENSE)
+Copyright © 2017-2021 Savings United GmbH, contributors. Licenced under [GPL-3](https://github.com/pcvg/gcp-ruby/blob/master/LICENSE)
