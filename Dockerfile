@@ -11,10 +11,14 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
       wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
       sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
       apt-get update && \
-      apt-get install -y gcc python-dev python-pip python-setuptools google-cloud-sdk nodejs yarn google-chrome-unstable --no-install-recommends && \
+      apt-get install -y software-properties-common gcc python-dev python-pip python-setuptools google-cloud-sdk nodejs yarn google-chrome-unstable --no-install-recommends && \
       apt-get autoremove && \
       rm -rf /var/lib/apt/lists/* && \
       pip install --no-cache-dir -U crcmod && \
       wget -q https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O ~/cloud_sql_proxy && \
       chmod +x ~/cloud_sql_proxy && \
-      mkdir /cloudsql
+      mkdir /cloudsql && \
+      curl -fsSl https://download.docker.com/linux/debian/gpg | apt-key add - && \
+      add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \ 
+      apt-get update && \
+      apt-get install -y docker-ce
