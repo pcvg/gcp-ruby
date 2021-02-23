@@ -19,6 +19,6 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
       chmod +x ~/cloud_sql_proxy && \
       mkdir /cloudsql && \
       curl -fsSl https://download.docker.com/linux/debian/gpg | apt-key add - && \
-      add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \ 
+      add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
       apt-get update && \
       apt-get install -y docker-ce
