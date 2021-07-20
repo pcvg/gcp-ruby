@@ -3,7 +3,7 @@ Google Cloud capable Docker image for Ruby.
 
 ## Features
 
-- Ruby 2.7.3
+- Ruby 2.7.4
 - Node.js v15
 - gcloud
 - cloudsql
