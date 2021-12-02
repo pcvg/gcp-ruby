@@ -12,10 +12,9 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
       wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
       sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
       apt-get update && \
-      apt-get install -y gcc python3-dev python3-pip python3-setuptools google-cloud-sdk nodejs yarn google-chrome-unstable --no-install-recommends && \
+      apt-get install -y gcc google-cloud-sdk nodejs yarn google-chrome-unstable --no-install-recommends && \
       apt-get autoremove && \
       rm -rf /var/lib/apt/lists/* && \
-      pip3 install --no-cache-dir -U crcmod && \
       wget -q https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O ~/cloud_sql_proxy && \
       chmod +x ~/cloud_sql_proxy && \
       mkdir /cloudsql
