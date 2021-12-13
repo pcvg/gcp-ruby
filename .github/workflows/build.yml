@@ -36,9 +36,6 @@ jobs:
       - name: Test Node.js
         run: docker run gcp-ruby bash -c "which node || exit 1"
 
-      - name: Test Yarn
-        run: docker run gcp-ruby bash -c "which yarn || exit 1"
-
       - name: Test Chrome
         run: docker run gcp-ruby bash -c "which google-chrome || exit 1"
 
