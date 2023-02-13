@@ -14,7 +14,4 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
       apt-get update && \
       apt-get install -y google-cloud-sdk nodejs yarn google-chrome-unstable --no-install-recommends && \
       apt-get autoremove && \
-      rm -rf /var/lib/apt/lists/* && \
-      wget -q https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O ~/cloud_sql_proxy && \
-      chmod +x ~/cloud_sql_proxy && \
-      mkdir /cloudsql
+      rm -rf /var/lib/apt/lists/*
