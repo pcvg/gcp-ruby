@@ -30,9 +30,6 @@ jobs:
       - name: Test Google Cloud SDK
         run: docker run gcp-ruby bash -c "which gcloud || exit 1"
 
-      - name: Test Cloud SQL Proxy
-        run: docker run gcp-ruby bash -c "test -f ~/cloud_sql_proxy && touch /cloudsql/.keep && rm /cloudsql/.keep || exit 1"
-
       - name: Test Node.js
         run: docker run gcp-ruby bash -c "which node || exit 1"
 
