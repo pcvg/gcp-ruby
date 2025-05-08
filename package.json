@@ -7,11 +7,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "dockerlint Dockerfile",
-    "build": "docker build -t gcp-ruby/test -f ./Dockerfile .",
-    "run": "docker run --rm -it --entrypoint sh gcp-ruby/test:latest",
-    "clean": "docker image rm gcp-ruby/test:latest",
-    "full-test": "npm run test && npm run build && npm run run && npm run clean"
+    "test": "dockerlint Dockerfile"
   },
   "repository": {
     "type": "git",
