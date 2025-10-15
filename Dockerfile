@@ -10,7 +10,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/chrome.gpg && \
     sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
     apt update && \
-    apt install -y google-cloud-sdk nodejs google-chrome-unstable imagemagick libmagickwand-dev --no-install-recommends && \
+    apt install -y google-cloud-sdk nodejs google-chrome-unstable python3-setuptools imagemagick libmagickwand-dev --no-install-recommends && \
     npm install -g corepack && \
     yarn set version stable && \
     rm /package.json && \
