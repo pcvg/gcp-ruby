@@ -1,6 +1,6 @@
-FROM ruby:3.4.8
+FROM ruby:3.4.9
 
-LABEL version="3.4.8"
+LABEL version="3.4.9"
 LABEL maintainer="Ain Tohvri <ain.tohvri@samwise-media.com>"
 
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
