@@ -1,5 +1,10 @@
 name: Build and Publish
-on: [push]
+on:
+  push:
+    branches: [main]
+    tags: ['*']
+  pull_request:
+    branches: [main]
 
 jobs:
 
