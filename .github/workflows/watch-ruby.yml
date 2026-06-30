@@ -1,0 +1,41 @@
+name: Watch Ruby tag
+
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  pull-requests: write
+
+env:
+  WATCH_BRANCH: feature/ruby-3_4_10
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Check Docker Hub for the pinned ruby tag
+        run: |
+          # feature/ruby-3_4_10 -> 3.4.10
+          RUBY_TAG=$(echo "$WATCH_BRANCH" | sed -E 's#.*ruby-##; s#_#.#g')
+          echo "watching ruby:${RUBY_TAG} (from $WATCH_BRANCH)"
+
+          # find the open PR for that branch; if none, there's nothing to watch
+          PR=$(gh pr list --head "$WATCH_BRANCH" --state open \
+                 --json number --jq '.[0].number // empty')
+          [ -n "$PR" ] || { echo "no open PR for $WATCH_BRANCH — done"; exit 0; }
+
+          code=$(curl -s -o /dev/null -w '%{http_code}' \
+            "https://hub.docker.com/v2/repositories/library/ruby/tags/${RUBY_TAG}")
+          echo "ruby:${RUBY_TAG} -> HTTP $code"
+          [ "$code" = "200" ] || exit 0
+
+          # comment once, not every night
+          seen=$(gh pr view "$PR" --json comments \
+                   --jq "[.comments[].body | select(contains(\"ruby:${RUBY_TAG} is live\"))] | length")
+          [ "$seen" = "0" ] && gh pr comment "$PR" \
+            --body "\`ruby:${RUBY_TAG}\` is live on Docker Hub — safe to merge this PR."
