@@ -10,11 +10,11 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /usr/share/keyrings/nodesource.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/node_22.x nodistro main" \
       | tee /etc/apt/sources.list.d/nodesource.list && \
-    apt update && \
-    apt install -y --no-install-recommends \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
       google-cloud-sdk nodejs chromium python3-setuptools imagemagick libmagickwand-dev xvfb && \
     ln -sf /usr/bin/chromium /usr/local/bin/google-chrome && \
     corepack enable && \
     corepack prepare yarn@stable --activate && \
-    apt autoremove -y && apt autoclean && \
-    rm -rf /var/lib/apt/lists/* /var/lib/cache/*
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
