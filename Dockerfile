@@ -14,8 +14,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
     apt install -y --no-install-recommends \
       google-cloud-sdk nodejs chromium python3-setuptools imagemagick libmagickwand-dev xvfb && \
     ln -sf /usr/bin/chromium /usr/local/bin/google-chrome && \
-    npm install -g corepack && \
-    yarn set version stable && \
-    rm -f /package.json && \
+    corepack enable && \
+    corepack prepare yarn@stable --activate && \
     apt autoremove -y && apt autoclean && \
     rm -rf /var/lib/apt/lists/* /var/lib/cache/*
