@@ -12,7 +12,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
       | tee /etc/apt/sources.list.d/nodesource.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-      google-cloud-sdk nodejs chromium python3-setuptools imagemagick libmagickwand-dev xvfb && \
+      google-cloud-cli nodejs chromium python3-setuptools imagemagick libmagickwand-dev xvfb && \
     ln -sf /usr/bin/chromium /usr/local/bin/google-chrome && \
     corepack enable && \
     corepack prepare yarn@stable --activate && \
