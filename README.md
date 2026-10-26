@@ -12,4 +12,8 @@ Google Cloud capable Docker image for Ruby.
 
 ## Licence
 
-Copyright © 2017-2026 Samwise GmbH, contributors. Licenced under [GPL-3](https://github.com/pcvg/gcp-ruby/blob/master/LICENSE)
+Copyright © 2017-2026 Samwise GmbH
+Copyright © 2026 AndSamwise Media GmbH
+and contributors.
+
+Licenced under [GPL-3](LICENSE)
