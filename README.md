@@ -3,7 +3,7 @@ Google Cloud capable Docker image for Ruby.
 
 ## Features
 
-- Ruby 3.4.10
+- Ruby 3.4.12
 - Node.js v22
 - gcloud
 - Bundler
