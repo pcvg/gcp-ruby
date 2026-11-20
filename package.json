@@ -19,7 +19,7 @@
     "dockerfile",
     "dockerlint"
   ],
-  "author": "Ain Tohvri <ain.tohvri@savings-united.com> (https://github.com/ain)",
+  "author": "Ain Tohvri <ain.tohvri@actmeraki.com> (https://github.com/ain)",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/pcvg/gcp-ruby/issues"
